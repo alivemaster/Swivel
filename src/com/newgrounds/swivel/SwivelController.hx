@@ -53,6 +53,7 @@ class SwivelController extends com.huey.binding.Binding.Bindable implements Cont
 	@bindable @forward(_recorder) public var scaleMode : ScaleMode;
 	@bindable @forward(_recorder) public var transparentBackground : Bool;
 	@bindable public var endOnRepeat : Bool;
+	@bindable public var outputScale : Int;
 
 	public var stereoAudio : Bool = true;
 	public var audioSource : AudioSource;

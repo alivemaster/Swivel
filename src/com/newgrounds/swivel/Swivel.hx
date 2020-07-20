@@ -256,6 +256,9 @@ class Swivel extends Application
 				case "eor":
 					_controller.endOnRepeat = true;
 					
+				case "sc":
+					_controller.outputScale = Std.parseInt(args.shift());
+
 				case "o":
 					_controller.outputFile = _cmdLineDirectory.resolvePath( StringTools.trim(args.shift()) );
 					
@@ -438,6 +441,11 @@ class Swivel extends Application
 					
 					var w : Float = 1920.0;
 					var h : Float = 1080.0;
+					if (outputScale != null) {
+						h = swf.height * outputScale
+						w = swf.width * outputScale
+					}
+
 					if(swfAspectRatio > w/h)
 						h = swf.height * (w/swf.width);
 					else
