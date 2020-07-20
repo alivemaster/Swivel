@@ -371,7 +371,8 @@ class SwivelController extends com.huey.binding.Binding.Bindable implements Cont
 	}
 	
 	private var _progress : Float;
-	private var _lastprogress : Float;
+	private var lastprogress : Float;
+	private var maxprogress : Float;
 	private var _frame : flash.display.BitmapData;
 
 	private var repeated_frames : Int;
@@ -397,7 +398,7 @@ class SwivelController extends com.huey.binding.Binding.Bindable implements Cont
 			default:
 		}
 		if(endOnRepeat){
-			if (_lastprogress == _progress) {
+			if (_progress <= maxprogress) {
 				// Progress stalled
 				repeated_frames += 1;
 				if (repeated_frames > endOnRepeatFrames) {
@@ -408,8 +409,9 @@ class SwivelController extends com.huey.binding.Binding.Bindable implements Cont
 			} else {
 				// Progress not stalled
 				repeated_frames = 0;
+				maxprogress = _progress;
 			}
-			_lastprogress = _progress;
+			
 		}
 	}
 	
