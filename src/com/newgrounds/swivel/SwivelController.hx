@@ -139,9 +139,10 @@ class SwivelController extends com.huey.binding.Binding.Bindable implements Cont
 		}
 				
 		_taskList = new List();
-		_taskList.add( StartEncoder(_videoFile, if(!usesSwfAudio) _audioFile else null) );
 		for(job in jobs) {
 			_taskList.add( ParseSwf(job) );
+			// Encoder has dynamic canvas so swf must be parsed first
+			_taskList.add( StartEncoder(_videoFile, if(!usesSwfAudio) _audioFile else null) );
 			_taskList.add( MutateSwf(job) );
 			if(usesSwfAudio) {
 				_taskList.add( EncodeSwf(job) );
@@ -237,7 +238,7 @@ class SwivelController extends com.huey.binding.Binding.Bindable implements Cont
 						_connection = new SwivelConnection();
 					} else _connection = new AS3SwivelConnection();
 				}
-				
+
 				_recordingStartFrame = 0;
 				_recordingNumFrames = 0;
 				_recorder.showWindow = Type.enumEq(job.duration, manual);

@@ -443,7 +443,12 @@ class Swivel extends Application
 					
 					var w : Float = 1920.0;
 					var h : Float = 1080.0;
-					
+
+					if (_controller.outputScale) {
+						w = swf.width * _controller.outputScalex;
+						h = swf.height * _controller.outputScalex;
+					}
+
 					if(swfAspectRatio > w/h)
 						h = swf.height * (w/swf.width);
 					else
