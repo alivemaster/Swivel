@@ -255,9 +255,11 @@ class Swivel extends Application
 
 				case "eor":
 					_controller.endOnRepeat = true;
+					_controller.endOnRepeatFrames = Std.parseInt(args.shift());
 					
 				case "sc":
-					_controller.outputScale = Std.parseInt(args.shift());
+					_controller.outputScale = true;
+					_controller.outputScalex = Std.parseInt(args.shift());
 
 				case "o":
 					_controller.outputFile = _cmdLineDirectory.resolvePath( StringTools.trim(args.shift()) );
@@ -441,11 +443,7 @@ class Swivel extends Application
 					
 					var w : Float = 1920.0;
 					var h : Float = 1080.0;
-					if (outputScale != null) {
-						h = swf.height * outputScale
-						w = swf.width * outputScale
-					}
-
+					
 					if(swfAspectRatio > w/h)
 						h = swf.height * (w/swf.width);
 					else
@@ -630,7 +628,7 @@ class Swivel extends Application
 			case MutateSwf(job):		'Tweaking SWF... (${job.file.name})';
 			case EncodeSwf(job):
 				recordingButton.visible = Type.enumEq(progress.job.duration,manual);
-				'Encoding SWF to video... (${job.file.name})';
+				'Encoding SWF to video... (${job.file.name}) (${_controller.outputWidth}x${_controller.outputHeight})';
 			case DecodeAudio:			'Decoding audio clips...';
 			case MixAudio:				'Mixing audio track...';
 			case StopEncoder:			'Finishing video encode...';

@@ -53,7 +53,9 @@ class SwivelController extends com.huey.binding.Binding.Bindable implements Cont
 	@bindable @forward(_recorder) public var scaleMode : ScaleMode;
 	@bindable @forward(_recorder) public var transparentBackground : Bool;
 	@bindable public var endOnRepeat : Bool;
-	@bindable public var outputScale : Int;
+	@bindable public var endOnRepeatFrames : Int;
+	@bindable public var outputScale : Bool;
+	@bindable public var outputScalex : Int;
 
 	public var stereoAudio : Bool = true;
 	public var audioSource : AudioSource;
@@ -194,6 +196,13 @@ class SwivelController extends com.huey.binding.Binding.Bindable implements Cont
 				_currentJob = job;
 				job.swf.parseSwf();
 				_parsedSwf = job.swf;
+
+				// After we parse the SWF, calculate output width, height
+				if (outputScale) {
+					_recorder.outputWidth = _parsedSwf.width * outputScalex;
+					_recorder.outputHeight = _parsedSwf.height * outputScalex;
+				}
+
 				runNextTask();
 
 			case MutateSwf(job):
@@ -363,6 +372,8 @@ class SwivelController extends com.huey.binding.Binding.Bindable implements Cont
 	private var _progress : Float;
 	private var _lastprogress : Float;
 	private var _frame : flash.display.BitmapData;
+
+	private var repeated_frames : Int;
 	
 	private function onFrameCaptured(frame : flash.display.BitmapData) {
 		if(_ffmpeg != null) _ffmpeg.send( frame.getPixels(frame.rect) );
@@ -384,11 +395,21 @@ class SwivelController extends com.huey.binding.Binding.Bindable implements Cont
 				
 			default:
 		}
-		if(endOnRepeat && (_lastprogress == _progress)) {
-			_recorder.stop();
-			runNextTask();
+		if(endOnRepeat){
+			if (_lastprogress == _progress) {
+				// Progress stalled
+				repeated_frames += 1;
+				if (repeated_frames > endOnRepeatFrames) {
+					// Progress stalled for x frames
+					_recorder.stop();
+					runNextTask();
+				}
+			} else {
+				// Progress not stalled
+				repeated_frames = 0;
+			}
+			_lastprogress = _progress;
 		}
-		_lastprogress = _progress;
 	}
 	
 	private function dispatchProgress(_) {
