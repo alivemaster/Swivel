@@ -252,6 +252,9 @@ class Swivel extends Application
 					
 				case "t":
 					_controller.transparentBackground = true;
+
+				case "eor":
+					_controller.endOnRepeat = true;
 					
 				case "o":
 					_controller.outputFile = _cmdLineDirectory.resolvePath( StringTools.trim(args.shift()) );

@@ -52,6 +52,7 @@ class SwivelController extends com.huey.binding.Binding.Bindable implements Cont
 	@bindable @forward(_recorder) public var outputHeight : Int;
 	@bindable @forward(_recorder) public var scaleMode : ScaleMode;
 	@bindable @forward(_recorder) public var transparentBackground : Bool;
+	@bindable public var endOnRepeat : Bool;
 
 	public var stereoAudio : Bool = true;
 	public var audioSource : AudioSource;
@@ -359,6 +360,7 @@ class SwivelController extends com.huey.binding.Binding.Bindable implements Cont
 	}
 	
 	private var _progress : Float;
+	private var _lastprogress : Float;
 	private var _frame : flash.display.BitmapData;
 	
 	private function onFrameCaptured(frame : flash.display.BitmapData) {
@@ -381,6 +383,11 @@ class SwivelController extends com.huey.binding.Binding.Bindable implements Cont
 				
 			default:
 		}
+		if(endOnRepeat && (_lastprogress == _progress)) {
+			_recorder.stop();
+			runNextTask();
+		}
+		_lastprogress = _progress;
 	}
 	
 	private function dispatchProgress(_) {
