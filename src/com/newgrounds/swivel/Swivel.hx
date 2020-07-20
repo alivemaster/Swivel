@@ -633,7 +633,7 @@ class Swivel extends Application
 			case MutateSwf(job):		'Tweaking SWF... (${job.file.name})';
 			case EncodeSwf(job):
 				recordingButton.visible = Type.enumEq(progress.job.duration,manual);
-				'Encoding SWF to video... (${job.file.name}) (${_controller.outputWidth}x${_controller.outputHeight})';
+				'Encoding SWF to video... (${job.file.name}) (${_controller.outputWidth}x${_controller.outputHeight}) (smoothing ${job.forceBitmapSmoothing})';
 			case DecodeAudio:			'Decoding audio clips...';
 			case MixAudio:				'Mixing audio track...';
 			case StopEncoder:			'Finishing video encode...';
