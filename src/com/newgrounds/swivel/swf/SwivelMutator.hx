@@ -70,17 +70,24 @@ class SwivelMutator implements ISWFMutator
 							i--;
 						}
 					case TShowFrame:
-						if(_startFrame == 0) break;
+						// trace("Showframe tag");
+						// trace(f); // Frame #
+						// Don't use automatic start, breaks animations that start paused.
+						// if(_startFrame == 0) break;  
 						
 						if(f==0) {
 							swf.tags.insert(i, TDoActions( SwivelSwf.getAvm1Bytes([AGotoFrame(_startFrame), APlay])) );
 							i++;
+							if(f==_startFrame) {
+								break;
+							}
 						} else if(f==_startFrame) {
 							swf.tags.insert(i, TDoActions( SwivelSwf.getAvm1Bytes([APlay])) );
 							break;
 						}
 						f++;
 					default:
+						
 				}
 				i++;
 			}

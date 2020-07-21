@@ -261,6 +261,8 @@ class Swivel extends Application
 					_controller.outputScale = true;
 					_controller.outputScalex = Std.parseInt(args.shift());
 
+				case "ns":
+					_controller.noStop = true;
 				case "o":
 					_controller.outputFile = _cmdLineDirectory.resolvePath( StringTools.trim(args.shift()) );
 					

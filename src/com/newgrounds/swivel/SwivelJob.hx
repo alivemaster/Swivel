@@ -32,6 +32,7 @@ class SwivelJob extends Binding.Bindable
 	@bindable public var renderQuality : RenderQuality;
 	@bindable public var forceBitmapSmoothing : Bool;
 	@bindable public var removeHomestuckControls : Bool;
+	@bindable public var removeASStop : Bool;
 	public var parameters : Dynamic;
 	
 	public function new(file : File, swf : SwivelSwf) {

@@ -56,6 +56,7 @@ class SwivelController extends com.huey.binding.Binding.Bindable implements Cont
 	@bindable public var endOnRepeatFrames : Int;
 	@bindable public var outputScale : Bool;
 	@bindable public var outputScalex : Int;
+	@bindable public var noStop : Bool;
 
 	public var stereoAudio : Bool = true;
 	public var audioSource : AudioSource;
@@ -217,7 +218,7 @@ class SwivelController extends com.huey.binding.Binding.Bindable implements Cont
 
 				_swfMutators.add( new SwivelMutator(startFrame) );
 				if(job.forceBitmapSmoothing) _swfMutators.add( new BitmapSmoothingMutator() );
-				if(job.removeHomestuckControls) _swfMutators.add( new HomestuckControlsMutator() );
+				if(noStop) _swfMutators.add( new ASNoStopMutator() );
 				if(job.swf.version >= 8) _swfMutators.add( new ScaleFilterMutator(_recorder.outputWidth / job.swf.width) );
 				if(Type.enumEq(audioSource, swf)) { // TODO
 					_audioTracker = new AudioTracker();

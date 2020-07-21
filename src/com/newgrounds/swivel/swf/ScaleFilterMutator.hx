@@ -72,20 +72,32 @@ class ScaleFilterMutator implements ISWFMutator
 	private function tweakFilters(id : Int, tags : Array<SWFTag>) : Array<SWFTag> {
 		var curClips = new IntMap<Int>();
 		
-		for(i in 0...tags.length) {
-			var tag = tags[i];
-			switch(tag) {
+
+		// for(i in 0...tags.length) {
+		// 	var tag = tags[i];
+			// var tag = tags[i];
+			// switch(tags) {
+		var i=0;
+		while(i < tags.length) {
+			switch(tags[i]) {
 				case TPlaceObject2(po):
 					try {
 						if (po.cid != null) curClips.set(po.depth, po.cid);
 						if (po.clipDepth != null) _maskClips.set(po.cid, true);
 					} catch ( e: Dynamic ) { 
 						trace(e); 
+						trace("TPO2 Tag " + i + " cid=" + po.cid + " depth=" + po.depth + " clipDepth=" + po.clipDepth);
 						break; 
 					}
 				case TPlaceObject3(po):
-					if (po.cid != null) curClips.set(po.depth, po.cid);
-					if (po.clipDepth != null) _maskClips.set(po.cid, true);
+					try {
+						if (po.cid != null) curClips.set(po.depth, po.cid);
+						if (po.clipDepth != null) _maskClips.set(po.cid, true);
+					} catch ( e: Dynamic ) { 
+						trace(e); 
+						trace("TPO3 Tag " + i + " cid=" + po.cid + " depth=" + po.depth + " clipDepth=" + po.clipDepth);
+						break; 
+					}
 					
 					if (po.filters != null || po.bitmapCache != null) {
 						var margin = 0.0;
@@ -143,6 +155,7 @@ class ScaleFilterMutator implements ISWFMutator
 					
 				default:
 			}
+			i++;
 		}
 		
 		return tags;
