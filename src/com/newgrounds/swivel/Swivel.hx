@@ -838,6 +838,7 @@ class Swivel extends Application
 			mainContainer.state = "error";
 			errorText.text = 'Whoa! Something bad happened, and the program blew up. Sorry about that!\nPlease copy and paste this junk and send it to mike@newgrounds.com along with the SWF you were converting:\n\n${Std.string(e.error)}\n${haxe.CallStack.exceptionStack().join("\n")}';
 		} else {
+			trace(Std.string(e.error) + "\n" + haxe.CallStack.exceptionStack().join("\n"));
 			NativeApplication.nativeApplication.exit(-1);
 		}
 	}

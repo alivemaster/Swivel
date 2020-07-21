@@ -21,7 +21,7 @@ package com.newgrounds.swivel.swf;
 
 import format.swf.Data;
 
-class BitmapSmoothingMutator implements ISWFMutator
+class HomestuckControlsMutator implements ISWFMutator
 {
 
 	public function new()

@@ -76,9 +76,13 @@ class ScaleFilterMutator implements ISWFMutator
 			var tag = tags[i];
 			switch(tag) {
 				case TPlaceObject2(po):
-					if (po.cid != null) curClips.set(po.depth, po.cid);
-					if (po.clipDepth != null) _maskClips.set(po.cid, true);
-					
+					try {
+						if (po.cid != null) curClips.set(po.depth, po.cid);
+						if (po.clipDepth != null) _maskClips.set(po.cid, true);
+					} catch ( e: Dynamic ) { 
+						trace(e); 
+						break; 
+					}
 				case TPlaceObject3(po):
 					if (po.cid != null) curClips.set(po.depth, po.cid);
 					if (po.clipDepth != null) _maskClips.set(po.cid, true);
