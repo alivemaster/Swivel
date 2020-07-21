@@ -31,12 +31,14 @@ class SwivelJob extends Binding.Bindable
 	@bindable public var duration : RecordingDuration;
 	@bindable public var renderQuality : RenderQuality;
 	@bindable public var forceBitmapSmoothing : Bool;
+	@bindable public var removeHomestuckControls : Bool;
 	public var parameters : Dynamic;
 	
 	public function new(file : File, swf : SwivelSwf) {
 		super();
 		renderQuality = High;
 		forceBitmapSmoothing = false;
+		removeHomestuckControls = false;
 		this.file = file;
 		this.swf = swf;
 		duration = frameRange(1,swf.numFrames);
