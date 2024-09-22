@@ -56,7 +56,7 @@ import haxe.io.Bytes;
 import haxe.io.BytesInput;
 import haxe.io.Input;
 
-@:xml("SwivelHuey.xml") @:version("1.16")
+@:xml("SwivelHuey.xml") @:version("1.15")
 class Swivel extends Application
 {
 	@bindable private var _controller : SwivelController;
@@ -439,8 +439,8 @@ class Swivel extends Application
 					var swfAspectRatio = swf.width / swf.height;
 					if(_aspectRatio != null) _aspectRatio = swfAspectRatio;
 					
-					var w : Float = 1920.0;
-					var h : Float = 1080.0;
+					var w : Float = 7680.0;
+					var h : Float = 4320.0;
 					if(swfAspectRatio > w/h)
 						h = swf.height * (w/swf.width);
 					else

@@ -9,7 +9,7 @@ set OUTPUT=%AIR_PATH%\%AIR_NAME%%AIR_TARGET%.air
 echo.
 echo Packaging %AIR_NAME%%AIR_TARGET%.air using certificate %CERT_FILE%...
 where adt
-call adt -package -storetype pkcs12 -keystore bat/Swivel.p12 -storepass %CERT_PASS% -target bundle bin/Swivel application.xml bin/Swivel.swf ffmpeg/win64 ffmpeg/licenses assets/icons README.md LICENSE.md
+call adt -package -storetype pkcs12 -keystore bat/Swivel.p12 -storepass %CERT_PASS% -tsa "http://timestamp.digicert.com/" -target bundle bin/Swivel application.xml bin/Swivel.swf ffmpeg/win64 ffmpeg/licenses assets/icons README.md LICENSE.md
 if errorlevel 1 goto failed
 goto end
 

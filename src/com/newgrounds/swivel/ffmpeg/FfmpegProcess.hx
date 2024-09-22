@@ -142,6 +142,8 @@ class FfmpegEncoder extends FfmpegProcess
 	];
 	
 	public static var PRESETS : Array<VideoPreset> = [
+		{label: "ProRes 4444 XQ", fileFormat: "mov", codec: "prores_ks", supportsBitRate: false, extraParameters: ["-profile:v","5"], supportedAudioCodecs: [AUDIO_CODECS[1]]},
+		{label: "ProRes 4444 XQ Matroska", fileFormat: "mkv", codec: "prores_ks", supportsBitRate: false, extraParameters: ["-profile:v","5"], supportedAudioCodecs: [AUDIO_CODECS[1]]},
 		{label: "H.264 High", fileFormat: "mp4", codec: "libx264", supportsBitRate: true, extraParameters: ["-preset","slow","-pix_fmt","yuv420p"], supportedAudioCodecs: [AUDIO_CODECS[0], AUDIO_CODECS[2]]},
 		{label: "H.264 Main", fileFormat: "mp4", codec: "libx264", supportsBitRate: true, extraParameters: ["-preset","slow","-profile:v","main","-pix_fmt","yuv420p"], supportedAudioCodecs: [AUDIO_CODECS[0], AUDIO_CODECS[2]]},
 		{label: "H.264 Baseline", fileFormat: "mp4", codec: "libx264", supportsBitRate: true, extraParameters: ["-preset","slow","-profile:v","baseline","-pix_fmt","yuv420p"], supportedAudioCodecs: [AUDIO_CODECS[0], AUDIO_CODECS[2]]},
