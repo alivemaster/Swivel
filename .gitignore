@@ -1,10 +1,8 @@
 /bin
 /obj
 /redirecter/ipch
-/redirecter/Debug
-/redirecter/Release
-/redirecter/redirecter/Debug
-/redirecter/redirecter/Release
+/redirecter/x64
+/redirecter/redirecter/x64
 /redirecter/.vs/
 RECOVER_*.fla
 swivel*.exe
