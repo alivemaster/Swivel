@@ -259,6 +259,17 @@ class Swivel extends Application
 				case "k":
 					_controller.keyframeEvery = Std.parseInt(args.shift());
 					
+				case "eor":
+					_controller.endOnRepeat = true;
+					_controller.endOnRepeatFrames = Std.parseInt(args.shift());
+					
+				case "sc":
+					_controller.outputScale = true;
+					_controller.outputScalex = Std.parseInt(args.shift());
+
+				case "ns":
+					_controller.noStop = true;
+					
 				case "o":
 					_controller.outputFile = _cmdLineDirectory.resolvePath( StringTools.trim(args.shift()) );
 				
@@ -625,7 +636,7 @@ class Swivel extends Application
 			case MutateSwf(job):		'Tweaking SWF... (${job.file.name})';
 			case EncodeSwf(job):
 				recordingButton.visible = Type.enumEq(progress.job.duration,manual);
-				'Encoding SWF to video... (${job.file.name})';
+				'Encoding SWF to video... (${job.file.name}) (${_controller.outputWidth}x${_controller.outputHeight}) (smoothing ${job.forceBitmapSmoothing})';
 			case DecodeAudio:			'Decoding audio clips...';
 			case MixAudio:				'Mixing audio track...';
 			case StopEncoder:			'Finishing video encode...';
@@ -830,6 +841,7 @@ class Swivel extends Application
 			mainContainer.state = "error";
 			errorText.text = 'Whoa! Something bad happened, and the program blew up. Sorry about that!\nPlease copy and paste this junk and send it to mike@newgrounds.com along with the SWF you were converting:\n\n${Std.string(e.error)}\n${haxe.CallStack.exceptionStack().join("\n")}';
 		} else {
+			trace(Std.string(e.error) + "\n" + haxe.CallStack.exceptionStack().join("\n"));
 			NativeApplication.nativeApplication.exit(-1);
 		}
 	}

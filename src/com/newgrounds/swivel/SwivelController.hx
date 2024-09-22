@@ -52,6 +52,11 @@ class SwivelController extends com.huey.binding.Binding.Bindable implements Cont
 	@bindable @forward(_recorder) public var outputHeight : Int;
 	@bindable @forward(_recorder) public var scaleMode : ScaleMode;
 	@bindable @forward(_recorder) public var transparentBackground : Bool;
+	@bindable public var endOnRepeat : Bool;
+	@bindable public var endOnRepeatFrames : Int;
+	@bindable public var outputScale : Bool;
+	@bindable public var outputScalex : Int;
+	@bindable public var noStop : Bool;
 
 	public var stereoAudio : Bool = true;
 	public var audioSource : AudioSource;
@@ -138,9 +143,10 @@ class SwivelController extends com.huey.binding.Binding.Bindable implements Cont
 		}
 				
 		_taskList = new List();
-		_taskList.add( StartEncoder(_videoFile, if(!usesSwfAudio) _audioFile else null) );
 		for(job in jobs) {
 			_taskList.add( ParseSwf(job) );
+			// Encoder has dynamic canvas so swf must be parsed first
+			_taskList.add( StartEncoder(_videoFile, if(!usesSwfAudio) _audioFile else null) );
 			_taskList.add( MutateSwf(job) );
 			if(usesSwfAudio) {
 				_taskList.add( EncodeSwf(job) );
@@ -195,6 +201,13 @@ class SwivelController extends com.huey.binding.Binding.Bindable implements Cont
 				_currentJob = job;
 				job.swf.parseSwf();
 				_parsedSwf = job.swf;
+
+				// After we parse the SWF, calculate output width, height
+				if (outputScale) {
+					_recorder.outputWidth = _parsedSwf.width * outputScalex;
+					_recorder.outputHeight = _parsedSwf.height * outputScalex;
+				}
+
 				runNextTask();
 
 			case MutateSwf(job):
@@ -208,6 +221,7 @@ class SwivelController extends com.huey.binding.Binding.Bindable implements Cont
 
 				_swfMutators.add( new SwivelMutator(startFrame) );
 				if(job.forceBitmapSmoothing) _swfMutators.add( new BitmapSmoothingMutator() );
+				if(noStop) _swfMutators.add( new ASNoStopMutator() );
 				if(job.swf.version >= 8) _swfMutators.add( new ScaleFilterMutator(_recorder.outputWidth / job.swf.width) );
 				if(Type.enumEq(audioSource, swf)) { // TODO
 					_audioTracker = new AudioTracker();
@@ -229,7 +243,7 @@ class SwivelController extends com.huey.binding.Binding.Bindable implements Cont
 						_connection = new SwivelConnection();
 					} else _connection = new AS3SwivelConnection();
 				}
-				
+
 				_recordingStartFrame = 0;
 				_recordingNumFrames = 0;
 				_recorder.showWindow = Type.enumEq(job.duration, manual);
@@ -362,7 +376,11 @@ class SwivelController extends com.huey.binding.Binding.Bindable implements Cont
 	}
 	
 	private var _progress : Float;
+	private var lastprogress : Float;
+	private var maxprogress : Float;
 	private var _frame : flash.display.BitmapData;
+
+	private var repeated_frames : Int;
 	
 	private function onFrameCaptured(frame : flash.display.BitmapData) {
 		if(_ffmpeg != null) _ffmpeg.send( frame.getPixels(frame.rect) );
@@ -383,6 +401,22 @@ class SwivelController extends com.huey.binding.Binding.Bindable implements Cont
 			case manual:
 				
 			default:
+		}
+		if(endOnRepeat){
+			if (_progress <= maxprogress) {
+				// Progress stalled
+				repeated_frames += 1;
+				if (repeated_frames > endOnRepeatFrames) {
+					// Progress stalled for x frames
+					_recorder.stop();
+					runNextTask();
+				}
+			} else {
+				// Progress not stalled
+				repeated_frames = 0;
+				maxprogress = _progress;
+			}
+			
 		}
 	}
 	

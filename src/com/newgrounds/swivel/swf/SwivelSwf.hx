@@ -40,6 +40,11 @@ class SwivelSwf {
 		return o.getBytes();
 	}
 
+	public static function parseAvm1Bytes( data ) : AS1 {
+		var i = new BytesInput(data);
+		return new format.as1.Reader(i).read();
+	}
+
 	public var version(get_version, set_version) : Int;
 	inline private function get_version()					{ return _header.version; }
 	inline private function set_version(v)					{ return _header.version = v; }
