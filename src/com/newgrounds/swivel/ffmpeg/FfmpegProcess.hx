@@ -142,10 +142,10 @@ class FfmpegEncoder extends FfmpegProcess
 	];
 	
 	public static var PRESETS : Array<VideoPreset> = [
-		{label: "ProRes 4444 XQ", fileFormat: "mov", codec: "prores_ks", supportsBitRate: false, extraParameters: ["-profile:v","5"], supportedAudioCodecs: [AUDIO_CODECS[1]]},
-		{label: "ProRes 422 HQ", fileFormat: "mov", codec: "prores_ks", supportsBitRate: false, extraParameters: ["-profile:v","3"], supportedAudioCodecs: [AUDIO_CODECS[1]]},
-		{label: "x264 crf14 veryslow", fileFormat: "mp4", codec: "libx264", supportsBitRate: false, extraParameters: ["-crf","14","-preset","veryslow","-pix_fmt","yuv420p"], supportedAudioCodecs: [AUDIO_CODECS[0], AUDIO_CODECS[2]]},
+		{label: "x264", fileFormat: "mp4", codec: "libx264", supportsBitRate: false, extraParameters: ["-crf","14","-preset","veryslow","-pix_fmt","yuv420p"], supportedAudioCodecs: [AUDIO_CODECS[0], AUDIO_CODECS[2]]},
 		{label: "H264 NVENC", fileFormat: "mp4", codec: "h264_nvenc", supportsBitRate: false, extraParameters: ["-preset","p7","-profile:v","high","-rc","vbr","-cq","19","-pix_fmt","yuv420p"], supportedAudioCodecs: [AUDIO_CODECS[0], AUDIO_CODECS[2]]},
+		{label: "ProRes 422 HQ", fileFormat: "mov", codec: "prores_ks", supportsBitRate: false, extraParameters: ["-profile:v","3"], supportedAudioCodecs: [AUDIO_CODECS[1]]},
+		{label: "ProRes 4444 XQ", fileFormat: "mov", codec: "prores_ks", supportsBitRate: false, extraParameters: ["-profile:v","5"], supportedAudioCodecs: [AUDIO_CODECS[1]]},
 		{label: "Uncompressed AVI", fileFormat: "avi", codec: "rawvideo", supportsBitRate: false, extraParameters: ["-pix_fmt","bgr24"], supportedAudioCodecs: [AUDIO_CODECS[1], AUDIO_CODECS[2]]},
 	];
 	public static var TRANSPARENT_PRESETS : Array<VideoPreset> = [
