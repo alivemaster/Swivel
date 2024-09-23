@@ -450,8 +450,8 @@ class Swivel extends Application
 					var swfAspectRatio = swf.width / swf.height;
 					if(_aspectRatio != null) _aspectRatio = swfAspectRatio;
 					
-					var w : Float = 7680.0;
-					var h : Float = 4320.0;
+					var w : Float = 1920.0;
+					var h : Float = 1080.0;
 					if(swfAspectRatio > w/h)
 						h = swf.height * (w/swf.width);
 					else
