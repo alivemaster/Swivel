@@ -54,8 +54,6 @@ class SwivelController extends com.huey.binding.Binding.Bindable implements Cont
 	@bindable @forward(_recorder) public var transparentBackground : Bool;
 	@bindable public var endOnRepeat : Bool;
 	@bindable public var endOnRepeatFrames : Int;
-	@bindable public var outputScale : Bool;
-	@bindable public var outputScalex : Int;
 	@bindable public var noStop : Bool;
 
 	public var stereoAudio : Bool = true;
@@ -201,13 +199,6 @@ class SwivelController extends com.huey.binding.Binding.Bindable implements Cont
 				_currentJob = job;
 				job.swf.parseSwf();
 				_parsedSwf = job.swf;
-
-				// After we parse the SWF, calculate output width, height
-				if (outputScale) {
-					_recorder.outputWidth = _parsedSwf.width * outputScalex;
-					_recorder.outputHeight = _parsedSwf.height * outputScalex;
-				}
-
 				runNextTask();
 
 			case MutateSwf(job):

@@ -262,10 +262,6 @@ class Swivel extends Application
 				case "eor":
 					_controller.endOnRepeat = true;
 					_controller.endOnRepeatFrames = Std.parseInt(args.shift());
-					
-				case "sc":
-					_controller.outputScale = true;
-					_controller.outputScalex = Std.parseInt(args.shift());
 
 				case "ns":
 					_controller.noStop = true;
