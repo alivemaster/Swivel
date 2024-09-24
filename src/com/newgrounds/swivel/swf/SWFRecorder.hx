@@ -135,6 +135,23 @@ class SWFRecorder {
 					_drawMatrix.translate((outputWidth - scaleY * _swf.width) / 2, 0);
 				} else _drawMatrix.scale(scaleX, scaleY);
 				
+			case cropStart:
+				if (scaleX > scaleY) {
+					_drawMatrix.scale(scaleX, scaleX);
+				} else if (scaleY > scaleX) {
+					_drawMatrix.scale(scaleY, scaleY);
+				} else _drawMatrix.scale(scaleX, scaleY);
+				
+			case cropEnd:
+				if (scaleX > scaleY) {
+					_drawMatrix.scale(scaleX, scaleX);
+					_drawMatrix.translate(0, (outputHeight - scaleX * _swf.height));
+				} else if (scaleY > scaleX) {
+					_drawMatrix.scale(scaleY, scaleY);
+					_drawMatrix.translate((outputWidth - scaleY * _swf.width), 0);
+				} else
+					_drawMatrix.scale(scaleX, scaleY);
+						
 			case letterbox:
 				if (scaleX < scaleY) {
 					_drawMatrix.scale(scaleX, scaleX);
@@ -290,6 +307,8 @@ class SWFRecorder {
 enum ScaleMode
 {
 	crop;
+	cropStart;
+	cropEnd;
 	stretchToFit;
 	letterbox;
 }

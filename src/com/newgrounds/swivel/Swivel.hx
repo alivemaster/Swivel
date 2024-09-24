@@ -99,6 +99,8 @@ class Swivel extends Application
 	
 	public var scaleModeGroup : RadioGroup;
 	public var cropButton : RadioButton;
+	public var cropStartButton : RadioButton;
+	public var cropEndButton : RadioButton;
 	public var letterboxButton : RadioButton;
 	public var exactFitButton : RadioButton;
 	public var transparentBgCheckBox : CheckBox;
@@ -235,6 +237,8 @@ class Swivel extends Application
 					switch(args.shift()) {
 						case "letterbox": _controller.scaleMode = letterbox;
 						case "crop": _controller.scaleMode = crop;
+						case "crop_start": _controller.scaleMode = cropStart;
+						case "crop_end": _controller.scaleMode = cropEnd;
 						case "stretch": _controller.scaleMode = stretchToFit;
 						default: throw("Invalid scale mode");
 					}
@@ -338,6 +342,8 @@ class Swivel extends Application
 		
 		Binding.bind( _controller.scaleMode, {
 			if(lockAspectCheckBox.selected || scaleModeGroup.selectedItem == cropButton) crop;
+			else if(scaleModeGroup.selectedItem == cropStartButton) cropStart;
+			else if(scaleModeGroup.selectedItem == cropEndButton) cropEnd;
 			else if(scaleModeGroup.selectedItem == letterboxButton) letterbox;
 			else stretchToFit;
 		} );
